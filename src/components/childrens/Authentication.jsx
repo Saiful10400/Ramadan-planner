@@ -1,39 +1,83 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./authentication.css";
 import { FaCamera } from "react-icons/fa";
 import { Link, useHref } from "react-router-dom";
+import { dataProvider } from "../context api/ContextApi";
+import useImgUpload from "../../Utility/useImgUpload";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../../firebase_config";
 const Authentication = () => {
-
-// identify is this login or registration page.
-
-const pageUrl=useHref()
-console.log(pageUrl);
-
-
-
-
-
-
   //input field style.
   const inputStyle =
     "text-black w-[90%] mx-auto block focus:outline-none text-lg py-1 px-2 rounded-lg mb-6 bangla";
 
+// identify is this login or registration page.
+const pageUrl=useHref()
+
+// get context api data.
+const{CreateUser,userLogin,user}=useContext(dataProvider)
+console.log(user)
+
   // profile photo handle.
+  const photoUpload=useImgUpload()
   const [profilePhotoBaseCode, setProfilePhotoBaseCode] = useState(null);
+  const [profilePhotourl,setProfilePhotoUrl]=useState(null)
   const profilePhotoHandle = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = () => {
       setProfilePhotoBaseCode(reader.result);
     };
-    file && reader.readAsDataURL(e.target.files[0]);
-  };
+    if(file){
+      reader.readAsDataURL(e.target.files[0]);
 
+    // upload profile photo into server.
+    photoUpload(file)
+    .then(res=>res.json())
+    .then(result=>{
+      setProfilePhotoUrl(result.data.display_url)
+    })
+    }
+   
+  };
   // login and registration handle.
+  const [errorMessage,setErrorMessage]=useState(null)
   const userFormHandle=(e)=>{
     e.preventDefault()
+    const form=e.target
+    const userName=form?.userName?.value
+    const email=form.email.value
+    const password=form.password.value
+
+    // now its time for login and signup.
+    if(pageUrl==="/register"){
+      // for registartion page.
+      if(profilePhotourl&&profilePhotoBaseCode){
+        CreateUser(email,password)
+      .then(res=>{
+        updateProfile(auth.currentUser,{displayName: userName, photoURL: profilePhotourl})
+        .then(res=>console.log(res))
+      })
+      }else{
+        setErrorMessage("আপনি ছবি আপলোড করেননি")
+      }
+    }else{
+      // for login page.
+    
+      userLogin(email,password)
+      .then(res=>{
+        console.log(res)
+      })
+    }
   }
+
+
+
+
+
+
+
 
   return (
     <div
@@ -72,21 +116,26 @@ console.log(pageUrl);
               onInput={profilePhotoHandle}
               name="profilePhoto"
               type="file"
+              accept="image/png, image/jpeg"
             />
+            <h1 className={`text-center mt-2 text-red-600 font-bold`}>{errorMessage}</h1>
             {/* input form */}
             <form onSubmit={userFormHandle} className="mt-8">
-              <input
-                type="email"
+              <input required
+                type="text"
+                name="userName"
                 placeholder="আপনার নাম লিখুন।"
                 className={inputStyle}
               />
-              <input
+              <input required
                 type="email"
+                name="email"
                 placeholder="আপনার ইমেইল লিখুন।"
                 className={inputStyle}
               />
-              <input
+              <input required
                 type="password"
+                name="password"
                 placeholder="আপনার পাসওয়ার্ড লিখুন।"
                 className={inputStyle}
               />
@@ -95,14 +144,16 @@ console.log(pageUrl);
             <Link to={"/login"}><h1 className="mt-4 text-center text-orange-600 underline font-semibold">আগে রেজিস্ট্রেশন করেছি</h1></Link>
           </div>
         </div>:<div className="h-[400px] flex justify-center flex-col items-center">
-          <form className="w-full">
-          <input
+          <form onSubmit={userFormHandle} className="w-full">
+          <input required
                 type="email"
+                name="email"
                 placeholder="আপনার ইমেইল লিখুন।"
                 className={inputStyle}
               />
-              <input
+              <input required
                 type="password"
+                name="password"
                 placeholder="আপনার পাসওয়ার্ড লিখুন।"
                 className={inputStyle}
               />

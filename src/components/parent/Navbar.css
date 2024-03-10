@@ -1,0 +1,23 @@
+.navContainer{
+/* From https://css.glass */
+background: rgba(155, 154, 154, 0.28);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.9px);
+-webkit-backdrop-filter: blur(4.9px);
+
+}
+ul li a{
+    font-weight: 700;
+    background: rgb(29, 26, 26);
+    padding: 3px 5px;
+    border-radius: 5px;
+    color: rgb(163, 163, 163);
+    
+}
+ul{
+    padding: 10px 0;
+}
+.active{
+    background: rgb(55, 49, 49);
+    color: white;
+}

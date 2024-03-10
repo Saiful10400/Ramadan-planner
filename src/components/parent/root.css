@@ -1,0 +1,5 @@
+.RootContainer{
+    background: url(../../../public/images/homeBg.jpg) no-repeat;
+    background-size: cover;
+    background-position: left center;
+}

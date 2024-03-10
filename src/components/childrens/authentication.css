@@ -1,8 +1,8 @@
-#authContainer{
+/* #authContainer{
     background: url(../../../public/images/authBg.jpg) no-repeat;
     background-position: center center;
     background-size: cover;
-}
+} */
 #loginContainer{
 /* From https://css.glass */
 background: rgba(255, 255, 255, 0.04);
