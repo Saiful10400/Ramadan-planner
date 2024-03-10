@@ -1,4 +1,12 @@
-
+.bangla{
+    font-family: "Tiro Bangla", serif;
+    font-weight: 400;
+    font-style: normal;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Micro+5&family=Tiro+Bangla:ital@0;1&display=swap')
+
+
