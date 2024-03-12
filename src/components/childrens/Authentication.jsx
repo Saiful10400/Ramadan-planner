@@ -2,12 +2,14 @@
 import { useContext, useState } from "react";
 import "./authentication.css";
 import { FaCamera } from "react-icons/fa";
-import { Link, useHref } from "react-router-dom";
+import { Link, useHref, useNavigate } from "react-router-dom";
 import { dataProvider } from "../context api/ContextApi";
 import useImgUpload from "../../Utility/useImgUpload";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../../firebase_config";
+import { axiosPublic } from "../../Utility/useAxiosPublic";
 const Authentication = () => {
+  const move=useNavigate()
   //input field style.
   const inputStyle =
     "text-black w-[90%] mx-auto block focus:outline-none text-lg py-1 px-2 rounded-lg mb-6 bangla";
@@ -57,7 +59,15 @@ console.log(user)
         CreateUser(email,password)
       .then(res=>{
         updateProfile(auth.currentUser,{displayName: userName, photoURL: profilePhotourl})
-        .then(res=>console.log(res))
+        .then(()=>{
+          // add the new user into the database.
+          axiosPublic.post("/create_a_new_user",{userName,PhotoUrl:profilePhotourl,userEmail:email,userPassword:password,created:new Date()})
+          .then(res=>{
+            if(res.data.insertedId){
+              move("/")
+            }
+          })
+        })
       })
       }else{
         setErrorMessage("আপনি ছবি আপলোড করেননি")
@@ -82,7 +92,7 @@ console.log(user)
   return (
     <div
       id="authContainer"
-      className="min-h-screen flex justify-center items-center"
+      className="h-[calc(100vh-55px)] flex justify-center items-center"
     >
       <div
         id="loginContainer"

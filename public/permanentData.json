@@ -3,13 +3,14 @@
     "title": "আজকের রোজা রাখতে হবে।",
     "type": "saom",
     "mark": {
-      "main": 85,
-      "bonus": 7
+      "main": 7,
+      "bonus": 3
     }
   },
   {
     "title": "ফজরের সালাত আদায় করতে হবে।",
     "type": "namaj",
+    "salatName":"fajr",
     "mark": {
       "main": 2,
       "bonus": 8
@@ -18,6 +19,7 @@
   {
     "title": "যোহরের সালাত আদায় করতে হবে।",
     "type": "namaj",
+    "salatName":"dhuhr",
     "mark": {
       "main": 2,
       "bonus": 8
@@ -25,6 +27,7 @@
   },
   {
     "title": "আসরের সালাত আদায় করতে হবে।",
+    "salatName":"asr",
     "type": "namaj",
     "mark": {
       "main": 2,
@@ -34,6 +37,7 @@
   {
     "title": "মাগরিবের সালাত আদায় করতে হবে।",
     "type": "namaj",
+    "salatName":"maghrib",
     "mark": {
       "main": 2,
       "bonus": 8
@@ -42,6 +46,7 @@
   {
     "title": "এশা + তারাবির সালাত আদায় করতে হবে।",
     "type": "namaj",
+    "salatName":"isha",
     "mark": {
       "main": 4,
       "bonus": 11

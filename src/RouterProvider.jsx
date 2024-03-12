@@ -5,8 +5,8 @@ import Root from "./components/Root";
 import Authentication from "./components/childrens/Authentication";
 import Home from "./components/childrens/Home/Home";
 import LeaderBoard from "./components/childrens/leaderboard/LeaderBoard";
-import ExclusiveTask from "./components/childrens/Home/subcomponent/ExclusiveTask";
-import RegularTask from "./components/childrens/Home/subcomponent/RegularTask";
+import ExclusiveTask from "./components/childrens/Home/subcomponent/exclusive task/ExclusiveTask";
+import RegularTask from "./components/childrens/Home/subcomponent/regular task/RegularTask";
 
 export const router=createBrowserRouter([
     {
